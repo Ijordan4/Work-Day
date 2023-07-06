@@ -1,32 +1,32 @@
 $(function () {
-  
-  $(".saveBtn").on("click", function () {
-    var key = $(this).parent().attr("id");
-    var value = $(this).siblings(".description").val();
-    localStorage.setItem(key, value);
+
+  $('.saveBtn').on('click', function() {
+    var timeBlockId = $(this).parent().attr('id');
+    var userInput = $(this).siblings('.description').val();
+    localStorage.setItem(timeBlockId, userInput);
   });
-
   
-  var currentHour = dayjs().format("H");
-  $(".time-block").each(function () {
-    var blockHour = parseInt($(this).attr("id").split("-")[1]);
-
+  
+  var currentHour = dayjs().hour();
+  $('.time-block').each(function() {
+    var blockHour = parseInt($(this).attr('id').split('-')[1]);
     if (blockHour < currentHour) {
-      $(this).addClass("past");
+      $(this).removeClass('present future').addClass('past');
     } else if (blockHour === currentHour) {
-      $(this).addClass("present");
+      $(this).removeClass('past future').addClass('present');
     } else {
-      $(this).addClass("future");
+      $(this).removeClass('past present').addClass('future');
     }
   });
-
   
-  $(".time-block").each(function () {
-    var key = $(this).attr("id");
-    var value = localStorage.getItem(key);
-    $(this).find(".description").val(value);
+  
+  $('.time-block').each(function() {
+    var timeBlockId = $(this).attr('id');
+    var userInput = localStorage.getItem(timeBlockId);
+    $(this).find('.description').val(userInput);
   });
-
-  var currentDate = dayjs().format("dddd, MMMM D, YYYY");
-  $("#currentDay").text(currentDate);
+  
+  
+  var currentDate = dayjs().format('dddd, MMMM D, YYYY');
+  $('#currentDay').text(currentDate);
 });
